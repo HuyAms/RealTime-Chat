@@ -73,12 +73,15 @@ class LoginController: UIViewController {
         return view
     }()
     
-    let profileImageView: UIImageView = {
+    lazy var profileImageView: UIImageView = {
        let imageView = UIImageView()
         imageView.image = UIImage(named: "avatar")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectProfileImageView)))
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     
@@ -108,6 +111,8 @@ class LoginController: UIViewController {
         
     }
     
+ 
+    
     
     @objc func handleLoginRegisterChange() {
         let title = loginRegisterSegmentControl.titleForSegment(at: loginRegisterSegmentControl.selectedSegmentIndex)
@@ -132,56 +137,7 @@ class LoginController: UIViewController {
         passwordTextFieldHeightAnchor?.isActive = true
     }
     
-    @objc func handleRegister() {
-        guard let email = emailTextField.text, let password = passwordTextField.text, let username = nameTextField.text else {
-            print("Form is not valid")
-            return
-        }
-        
-        if loginRegisterSegmentControl.selectedSegmentIndex == 0 {
-            handleLogin(email: email, password: password)
-        } else {
-            handleLoginRegister(email: email, password: password, username: username)
-        }
-    }
     
-    func handleLogin(email: String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            self.dismiss(animated: true, completion: nil)
-        })
-    }
-    
-    func handleLoginRegister(email: String, password: String, username: String) {
-        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            guard let uid = user?.uid else {
-                return
-            }
-            
-            //successfully authenticated user
-            let ref = Database.database().reference(fromURL: "https://realtimechat-a16f1.firebaseio.com/")
-            let userRef = ref.child("users").child(uid)
-            let values = ["name": username, "email": email]
-            
-            userRef.updateChildValues(values, withCompletionBlock: { (error, ref) in
-                if error != nil {
-                    print(error!)
-                    return
-                }
-                
-                self.dismiss(animated: true, completion: nil)
-            })
-        }
-    }
     
     func setupLoginRegisterSegmentControl() {
         //need x, y, width and height contraints

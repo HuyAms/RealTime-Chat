@@ -31,6 +31,7 @@ class NewMessageController: UITableViewController {
                 var user = User()
                 user.email = dictionary["email"] as? String
                 user.name = dictionary["name"] as? String
+                user.profileImageUrl = dictionary["profileImageUrl"] as? String
                 self.users.append(user)
                 
                 DispatchQueue.main.async {
