@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 
 class LoginController: UIViewController {
+    
+    var messageController: MessageController?
 
     let inputsContainerView: UIView = {
         let view = UIView()
@@ -110,10 +112,7 @@ class LoginController: UIViewController {
         setupLoginRegisterSegmentControl()
         
     }
-    
- 
-    
-    
+
     @objc func handleLoginRegisterChange() {
         let title = loginRegisterSegmentControl.titleForSegment(at: loginRegisterSegmentControl.selectedSegmentIndex)
         loginRegisterButton.setTitle(title, for: .normal)

@@ -11,6 +11,7 @@ import Firebase
 
 extension LoginController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    
     @objc func handleSelectProfileImageView() {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -60,6 +61,7 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
                 return
             }
             
+            self.messageController?.fetchUserAndSetupNavBarTitle()
             self.dismiss(animated: true, completion: nil)
         })
     }
@@ -77,8 +79,8 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             
             //successfully authenticated user
             let imageName = NSUUID().uuidString
-            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).png")
-            if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
+            let storageRef = Storage.storage().reference().child("profile_images").child("\(imageName).jpg")
+            if let profileImage = self.profileImageView.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
                 storageRef.putData(uploadData, metadata: nil, completion: { (metadata, error) in
                     if error != nil {
                         print(error!)
@@ -107,6 +109,13 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
                 print(error!)
                 return
             }
+            
+//            self.messageController?.fetchUserAndSetupNavBarTitle()
+            var user = User()
+            user.email = values["email"] as? String
+            user.name = values["name"] as? String
+            user.profileImageUrl = values["profileImageUrl"] as? String
+            self.messageController?.setupNavBarWithUser(user: user)
             
             self.dismiss(animated: true, completion: nil)
         })
