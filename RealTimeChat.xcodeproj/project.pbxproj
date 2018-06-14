@@ -10,6 +10,7 @@
 		2E247D9A225E836F2C065D6B /* Pods_RealTimeChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95EB3AB77B64D242350012C4 /* Pods_RealTimeChat.framework */; };
 		5E2874810AA8F943EDBA6FA5 /* Pods_RealTimeChatUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2116F922F7752EB6FC1780A /* Pods_RealTimeChatUITests.framework */; };
 		84ABD2201D1EA34193070411 /* Pods_RealTimeChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F53A262A021CE76A4BF7E5A /* Pods_RealTimeChatTests.framework */; };
+		C339272B20D24CC400FCCC26 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C339272A20D24CC400FCCC26 /* ChatLogController.swift */; };
 		C340BEE020D04DCA00DF5B04 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C340BEDF20D04DCA00DF5B04 /* Extension.swift */; };
 		C347D28A20C69F7800F08146 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D28920C69F7800F08146 /* AppDelegate.swift */; };
 		C347D28C20C69F7800F08146 /* MessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D28B20C69F7800F08146 /* MessageController.swift */; };
@@ -50,6 +51,7 @@
 		82F38649E92F2B1EB13612E6 /* Pods-RealTimeChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTimeChatTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealTimeChatTests/Pods-RealTimeChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		95EB3AB77B64D242350012C4 /* Pods_RealTimeChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RealTimeChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A8B92B4031EBDF28A451B20 /* Pods-RealTimeChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTimeChatTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealTimeChatTests/Pods-RealTimeChatTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C339272A20D24CC400FCCC26 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		C340BEDF20D04DCA00DF5B04 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		C347D28620C69F7800F08146 /* RealTimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C347D28920C69F7800F08146 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 				C347D2B820C6A1DC00F08146 /* LoginController.swift */,
 				C358DE0C20CFEFE5001B2C7B /* NewMessageController.swift */,
 				C358DE1120CFFE81001B2C7B /* LoginController + handlers.swift */,
+				C339272A20D24CC400FCCC26 /* ChatLogController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C339272B20D24CC400FCCC26 /* ChatLogController.swift in Sources */,
 				C347D28C20C69F7800F08146 /* MessageController.swift in Sources */,
 				C358DE0D20CFEFE5001B2C7B /* NewMessageController.swift in Sources */,
 				C358DE1020CFF5BB001B2C7B /* User.swift in Sources */,
