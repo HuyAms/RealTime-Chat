@@ -12,6 +12,8 @@
 		84ABD2201D1EA34193070411 /* Pods_RealTimeChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F53A262A021CE76A4BF7E5A /* Pods_RealTimeChatTests.framework */; };
 		C339272B20D24CC400FCCC26 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C339272A20D24CC400FCCC26 /* ChatLogController.swift */; };
 		C340BEE020D04DCA00DF5B04 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C340BEDF20D04DCA00DF5B04 /* Extension.swift */; };
+		C3424EC320D368B500C7327E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C3424EC220D368B500C7327E /* GoogleService-Info.plist */; };
+		C3424EC520D3742100C7327E /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3424EC420D3742100C7327E /* Message.swift */; };
 		C347D28A20C69F7800F08146 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D28920C69F7800F08146 /* AppDelegate.swift */; };
 		C347D28C20C69F7800F08146 /* MessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D28B20C69F7800F08146 /* MessageController.swift */; };
 		C347D28F20C69F7800F08146 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C347D28D20C69F7800F08146 /* Main.storyboard */; };
@@ -21,7 +23,6 @@
 		C347D2AA20C69F7800F08146 /* RealTimeChatUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D2A920C69F7800F08146 /* RealTimeChatUITests.swift */; };
 		C347D2B920C6A1DC00F08146 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D2B820C6A1DC00F08146 /* LoginController.swift */; };
 		C347D2BC20C6A52000F08146 /* UIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C347D2BB20C6A52000F08146 /* UIExtensions.swift */; };
-		C358DE0B20CFA782001B2C7B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C358DE0A20CFA782001B2C7B /* GoogleService-Info.plist */; };
 		C358DE0D20CFEFE5001B2C7B /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C358DE0C20CFEFE5001B2C7B /* NewMessageController.swift */; };
 		C358DE1020CFF5BB001B2C7B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C358DE0F20CFF5BB001B2C7B /* User.swift */; };
 		C358DE1220CFFE81001B2C7B /* LoginController + handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C358DE1120CFFE81001B2C7B /* LoginController + handlers.swift */; };
@@ -53,6 +54,8 @@
 		9A8B92B4031EBDF28A451B20 /* Pods-RealTimeChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTimeChatTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RealTimeChatTests/Pods-RealTimeChatTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C339272A20D24CC400FCCC26 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		C340BEDF20D04DCA00DF5B04 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		C3424EC220D368B500C7327E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C3424EC420D3742100C7327E /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		C347D28620C69F7800F08146 /* RealTimeChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTimeChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C347D28920C69F7800F08146 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C347D28B20C69F7800F08146 /* MessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageController.swift; sourceTree = "<group>"; };
@@ -68,7 +71,6 @@
 		C347D2AB20C69F7800F08146 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C347D2B820C6A1DC00F08146 /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		C347D2BB20C6A52000F08146 /* UIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIExtensions.swift; sourceTree = "<group>"; };
-		C358DE0A20CFA782001B2C7B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C358DE0C20CFEFE5001B2C7B /* NewMessageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
 		C358DE0F20CFF5BB001B2C7B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C358DE1120CFFE81001B2C7B /* LoginController + handlers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginController + handlers.swift"; sourceTree = "<group>"; };
@@ -167,9 +169,9 @@
 				C347D2B720C6A1B600F08146 /* Controllers */,
 				C347D28920C69F7800F08146 /* AppDelegate.swift */,
 				C347D28D20C69F7800F08146 /* Main.storyboard */,
+				C3424EC220D368B500C7327E /* GoogleService-Info.plist */,
 				C347D29020C69F7800F08146 /* Assets.xcassets */,
 				C347D29220C69F7800F08146 /* LaunchScreen.storyboard */,
-				C358DE0A20CFA782001B2C7B /* GoogleService-Info.plist */,
 				C347D29520C69F7800F08146 /* Info.plist */,
 			);
 			path = RealTimeChat;
@@ -217,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				C358DE0F20CFF5BB001B2C7B /* User.swift */,
+				C3424EC420D3742100C7327E /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -333,7 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C347D29420C69F7800F08146 /* LaunchScreen.storyboard in Resources */,
-				C358DE0B20CFA782001B2C7B /* GoogleService-Info.plist in Resources */,
+				C3424EC320D368B500C7327E /* GoogleService-Info.plist in Resources */,
 				C347D29120C69F7800F08146 /* Assets.xcassets in Resources */,
 				C347D28F20C69F7800F08146 /* Main.storyboard in Resources */,
 			);
@@ -448,6 +451,7 @@
 				C358DE1220CFFE81001B2C7B /* LoginController + handlers.swift in Sources */,
 				C347D2B920C6A1DC00F08146 /* LoginController.swift in Sources */,
 				C347D28A20C69F7800F08146 /* AppDelegate.swift in Sources */,
+				C3424EC520D3742100C7327E /* Message.swift in Sources */,
 				C347D2BC20C6A52000F08146 /* UIExtensions.swift in Sources */,
 				C340BEE020D04DCA00DF5B04 /* Extension.swift in Sources */,
 			);

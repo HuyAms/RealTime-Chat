@@ -11,18 +11,53 @@ import Firebase
 
 class MessageController: UITableViewController {
     
+    var messages = [Message]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout))
         
-         navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(handleNewMessage)), UIBarButtonItem(title: "Chat", style: .plain, target: self, action: #selector(showChatController))]
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(handleNewMessage))
         
         checkIfUserIsLoggedIn()
+        
+        observeMessages()
     }
     
-    @objc func showChatController() {
+    func observeMessages() {
+        let ref = Database.database().reference().child("messages")
+        ref.observe(.childAdded, with: { (snapshot) in
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                var message = Message()
+                message.fromId = dictionary["fromId"] as? String
+                message.toId = dictionary["toId"] as? String
+                message.text = dictionary["text"] as? String
+                message.timestamp = dictionary["timestamp"] as? Int
+                self.messages.append(message)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+        }, withCancel: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+        print(messages)
+        let message = messages[indexPath.row]
+        cell.textLabel?.text = message.text
+        return cell
+    }
+    
+    func showChatControllerForUser(user: User) {
         let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
         navigationController?.pushViewController(chatLogController, animated: true)
     }
     
@@ -100,6 +135,7 @@ class MessageController: UITableViewController {
     
     @objc func handleNewMessage() {
         let newMessageController = NewMessageController()
+        newMessageController.messagesController = self
         let navController = UINavigationController(rootViewController: newMessageController)
         present(navController, animated: true, completion: nil)
     }
