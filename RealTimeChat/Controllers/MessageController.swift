@@ -27,7 +27,43 @@ class MessageController: UITableViewController {
         
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
         
-        observeMessages()
+//        observeMessages()
+        
+    }
+    
+    func observeUserMessage() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let ref = Database.database().reference().child("user-messages").child(uid)
+        ref.observe(.childAdded, with: { (snapshot) in
+            let messageId = snapshot.key
+            let messageReference = Database.database().reference().child("messages").child(messageId)
+            messageReference.observeSingleEvent(of: .value, with: { (snapshot) in
+                
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    var message = Message()
+                    message.fromId = dictionary["fromId"] as? String
+                    message.toId = dictionary["toId"] as? String
+                    message.text = dictionary["text"] as? String
+                    message.timestamp = dictionary["timestamp"] as? Int
+                    
+                    if let toId = message.toId {
+                        self.messageDictionary[toId] = message
+                        self.messages = Array(self.messageDictionary.values)
+                        self.messages.sort(by: { (m1, m2) -> Bool in
+                            return m1.timestamp! > m2.timestamp!
+                        })
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+                
+            }, withCancel: nil)
+        }, withCancel: nil)
     }
     
     func observeMessages() {
@@ -89,6 +125,12 @@ class MessageController: UITableViewController {
     }
     
     func setupNavBarWithUser(user: User) {
+        messages.removeAll()
+        messageDictionary.removeAll()
+        tableView.reloadData()
+        
+        observeUserMessage()
+        
         let titleView = UIView()
         titleView.frame = CGRect(x: 0, y: 0, width: 100, height: 40)
         
