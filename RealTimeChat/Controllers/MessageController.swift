@@ -11,7 +11,10 @@ import Firebase
 
 class MessageController: UITableViewController {
     
+    let cellId = "cellId"
+    
     var messages = [Message]()
+    var messageDictionary = [String: Message]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +24,8 @@ class MessageController: UITableViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(handleNewMessage))
         
         checkIfUserIsLoggedIn()
+        
+        tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
         
         observeMessages()
     }
@@ -34,7 +39,14 @@ class MessageController: UITableViewController {
                 message.toId = dictionary["toId"] as? String
                 message.text = dictionary["text"] as? String
                 message.timestamp = dictionary["timestamp"] as? Int
-                self.messages.append(message)
+                
+                if let toId = message.toId {
+                    self.messageDictionary[toId] = message
+                    self.messages = Array(self.messageDictionary.values)
+                    self.messages.sort(by: { (m1, m2) -> Bool in
+                        return m1.timestamp! > m2.timestamp!
+                    })
+                }
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -48,11 +60,17 @@ class MessageController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
-        print(messages)
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
+        
         let message = messages[indexPath.row]
-        cell.textLabel?.text = message.text
+        cell.message = message
+        
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
     }
     
     func showChatControllerForUser(user: User) {
