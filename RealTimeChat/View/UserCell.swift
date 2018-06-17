@@ -29,26 +29,11 @@ class UserCell: UITableViewCell {
                 dataFormater.dateFormat = "hh:mm:ss a"
                 timeLabel.text = dataFormater.string(from: timestampDate)
             }
-            
-
-            
         }
     }
     
     private func setupNameAndProfileImage() {
-        let chatPartnerId: String?
-        
-        guard let message = message else {
-            return
-        }
-        
-        if message.fromId == Auth.auth().currentUser?.uid {
-            chatPartnerId = message.toId
-        } else {
-            chatPartnerId = message.fromId
-        }
-        
-        if let id = chatPartnerId {
+        if let id = message?.chatPartnerId() {
             let ref = Database.database().reference().child("users").child(id)
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
                 

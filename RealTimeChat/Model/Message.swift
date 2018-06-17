@@ -7,10 +7,22 @@
 //
 
 import Foundation
+import Firebase
 
 struct Message {
     var fromId: String?
     var text: String?
     var timestamp: Int?
     var toId: String?
+    
+    func chatPartnerId() -> String? {
+        let chatPartnerId: String?
+        
+        if fromId == Auth.auth().currentUser?.uid {
+            chatPartnerId = toId
+        } else {
+            chatPartnerId = fromId
+        }
+        return chatPartnerId
+    }
 }
