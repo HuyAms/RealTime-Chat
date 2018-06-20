@@ -14,6 +14,7 @@ struct Message {
     var text: String?
     var timestamp: Int?
     var toId: String?
+    var imageUrl: String?
     
     func chatPartnerId() -> String? {
         let chatPartnerId: String?

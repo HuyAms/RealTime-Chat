@@ -146,7 +146,6 @@
 			isa = PBXGroup;
 			children = (
 				C3424EC720D37E4F00C7327E /* UserCell.swift */,
-				C3B0472320D67FDE000C1F10 /* ChatMessageCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -233,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				C358DE0F20CFF5BB001B2C7B /* User.swift */,
+				C3B0472320D67FDE000C1F10 /* ChatMessageCell.swift */,
 				C3424EC420D3742100C7327E /* Message.swift */,
 			);
 			path = Model;
