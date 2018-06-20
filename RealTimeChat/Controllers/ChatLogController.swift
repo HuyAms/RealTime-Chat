@@ -36,16 +36,14 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                     return
                 }
                 
-                var message = Message()
-                message.fromId = dictionary["fromId"] as? String
-                message.toId = dictionary["toId"] as? String
-                message.text = dictionary["text"] as? String
-                message.timestamp = dictionary["timestamp"] as? Int
-                message.imageUrl = dictionary["imageUrl"] as? String
+                let message = Message(dictionary: dictionary)
                 
                 self.messages.append(message)
                 DispatchQueue.main.async {
                     self.collectionView?.reloadData()
+                    //scroll to the last index
+                    let indexPath = IndexPath(item: self.messages.count - 1, section: 0)
+                    self.collectionView?.scrollToItem(at: indexPath, at: .bottom, animated: true)
                 }
             }, withCancel: nil)
         }, withCancel: nil)
@@ -201,34 +199,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
                 }
                 
                 if let imageUrl = metadata?.downloadURL()?.absoluteString {
-                    self.sendMessageWithImageUrl(imageUrl: imageUrl)
+                    self.sendMessageWithImageUrl(imageUrl: imageUrl, image: image)
                 }
-            })
-        }
-    }
-    
-    private func sendMessageWithImageUrl(imageUrl: String) {
-        let ref = Database.database().reference().child("messages")
-        let childRef = ref.childByAutoId()
-        if let user = user, let toId = user.id, let fromId = Auth.auth().currentUser?.uid {
-            let timestamp: Int = Int(NSDate().timeIntervalSince1970)
-            let values = ["imageUrl": imageUrl, "toId": toId, "fromId": fromId, "timestamp": timestamp] as [String : Any]
-            
-            childRef.updateChildValues(values, withCompletionBlock: { (error, ref) in
-                if error != nil {
-                    print(error!)
-                    return
-                }
-                
-                self.inputTextField.text = nil
-                
-                let userMessagesRef = Database.database().reference().child("user-messages").child(fromId).child(toId)
-                
-                let messageId = childRef.key
-                userMessagesRef.updateChildValues([messageId: 1])
-                
-                let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toId).child(fromId)
-                recipientUserMessagesRef.updateChildValues([messageId: 1])
             })
         }
     }
@@ -251,6 +223,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         //modify the bubbleView's width
         if let text = message.text  {
             cell.bubbleWidthAnchor?.constant = estimateFrameForText(text: text).width + 32
+        } else if message.imageUrl != nil {
+            cell.bubbleWidthAnchor?.constant = 200
         }
         
         return cell
@@ -262,8 +236,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         }
         
         if let messageImageUrl = message.imageUrl {
+            cell.bubbleView.backgroundColor = UIColor.red
             cell.messageImageView.isHidden = false
-            cell.bubbleView.backgroundColor = UIColor.clear
             cell.messageImageView.loadImageUsingCacheWithUrlString(urlString: messageImageUrl)
         } else {
             cell.messageImageView.isHidden = true
@@ -271,7 +245,8 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         
         if message.fromId == Auth.auth().currentUser?.uid {
             cell.bubbleView.backgroundColor = ChatMessageCell.blueColor
-            
+            cell.textView.textColor = UIColor.white
+
             cell.bubbleViewRightAnchor?.isActive = true
             cell.bubbleViewLeftAnchor?.isActive = false
             cell.profileImageView.isHidden = true
@@ -289,8 +264,11 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
         var height: CGFloat = 80
         
         //get estimated height
-        if let text = messages[indexPath.item].text {
+        let message = messages[indexPath.item]
+        if let text = message.text {
             height = estimateFrameForText(text: text).height + 20
+        } else if let imageWidth = message.imageWidth, let imageHeight = message.imageHeight {
+            height =  CGFloat(imageHeight / imageWidth * 200)
         }
         
         let width = UIScreen.main.bounds.width
@@ -362,6 +340,32 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate, UIColl
             let timestamp: Int = Int(NSDate().timeIntervalSince1970)
             let values = ["text": inputTextField.text!, "toId": toId, "fromId": fromId, "timestamp": timestamp] as [String : Any]
 
+            childRef.updateChildValues(values, withCompletionBlock: { (error, ref) in
+                if error != nil {
+                    print(error!)
+                    return
+                }
+                
+                self.inputTextField.text = nil
+                
+                let userMessagesRef = Database.database().reference().child("user-messages").child(fromId).child(toId)
+                
+                let messageId = childRef.key
+                userMessagesRef.updateChildValues([messageId: 1])
+                
+                let recipientUserMessagesRef = Database.database().reference().child("user-messages").child(toId).child(fromId)
+                recipientUserMessagesRef.updateChildValues([messageId: 1])
+            })
+        }
+    }
+    
+    private func sendMessageWithImageUrl(imageUrl: String, image: UIImage) {
+        let ref = Database.database().reference().child("messages")
+        let childRef = ref.childByAutoId()
+        if let user = user, let toId = user.id, let fromId = Auth.auth().currentUser?.uid {
+            let timestamp: Int = Int(NSDate().timeIntervalSince1970)
+            let values = ["toId": toId, "fromId": fromId, "timestamp": timestamp, "imageUrl": imageUrl, "imageHeight": image.size.height, "imageWidth":image.size.width] as [String : Any]
+            
             childRef.updateChildValues(values, withCompletionBlock: { (error, ref) in
                 if error != nil {
                     print(error!)

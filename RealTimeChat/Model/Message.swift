@@ -15,6 +15,8 @@ struct Message {
     var timestamp: Int?
     var toId: String?
     var imageUrl: String?
+    var imageWidth: Double?
+    var imageHeight: Double?
     
     func chatPartnerId() -> String? {
         let chatPartnerId: String?
@@ -25,5 +27,15 @@ struct Message {
             chatPartnerId = fromId
         }
         return chatPartnerId
+    }
+    
+    init(dictionary: [String: AnyObject]) {
+        fromId = dictionary["fromId"] as? String
+        toId = dictionary["toId"] as? String
+        text = dictionary["text"] as? String
+        timestamp = dictionary["timestamp"] as? Int
+        imageUrl = dictionary["imageUrl"] as? String
+        imageWidth = dictionary["imageWidth"] as? Double
+        imageHeight = dictionary["imageHeight"] as? Double
     }
 }
