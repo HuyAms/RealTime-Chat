@@ -17,6 +17,7 @@ struct Message {
     var imageUrl: String?
     var imageWidth: Double?
     var imageHeight: Double?
+    let videoUrl: String?
     
     func chatPartnerId() -> String? {
         let chatPartnerId: String?
@@ -37,5 +38,6 @@ struct Message {
         imageUrl = dictionary["imageUrl"] as? String
         imageWidth = dictionary["imageWidth"] as? Double
         imageHeight = dictionary["imageHeight"] as? Double
+        videoUrl = dictionary["videoUrl"] as? String
     }
 }
