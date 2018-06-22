@@ -53,7 +53,7 @@ class ChatMessageCell: UICollectionViewCell {
         super.prepareForReuse()
         playerLayer?.removeFromSuperlayer()
         player?.pause()
-        activityIndicatorView.startAnimating()
+        activityIndicatorView.stopAnimating()
     }
     
     let textView: UITextView = {
