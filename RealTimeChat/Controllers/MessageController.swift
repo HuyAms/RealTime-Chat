@@ -27,7 +27,39 @@ class MessageController: UITableViewController {
         
         tableView.register(UserCell.self, forCellReuseIdentifier: cellId)
         
+        tableView.allowsMultipleSelectionDuringEditing = true
+        
 //        observeMessages()
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let message = self.messages[indexPath.row]
+        
+        if let chatPartnerId = message.chatPartnerId() {
+            Database.database().reference().child("user-messages").child(uid).child(chatPartnerId).removeValue(completionBlock: { (error, ref) in
+                if error != nil {
+                    print("Failed to delete message: ", error!)
+                    return
+                }
+                
+                
+                self.messageDictionary.removeValue(forKey: chatPartnerId)
+                self.attemptReloadOfTable()
+                
+                //this is one way of updating the table, but its actually not that safe
+//                self.messages.remove(at: indexPath.row)
+//                self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            })
+        }
         
     }
     
@@ -102,6 +134,11 @@ class MessageController: UITableViewController {
                 }
             }
         }, withCancel: nil)
+        
+        ref.observe(.childRemoved) { (snapshot) in
+            self.messageDictionary.removeValue(forKey: snapshot.key)
+            self.attemptReloadOfTable()
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
